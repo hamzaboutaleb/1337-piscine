@@ -6,7 +6,7 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:25:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/06 10:58:15 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:31:19 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	count_words(char *str, char *charset)
 
 	i = 0;
 	res = 0;
+	if (!*str)
+		return (0);
 	while (str[i])
 	{
 		while (str[i] && string_has(charset, str[i]))
@@ -54,7 +56,7 @@ char	*make_string(char *str, int start, int end)
 	i = 0;
 	size = end - start;
 	res = (char *)malloc(sizeof(char) * size + 1);
-	if (res == NULL)
+	if (res == NULL || !*str)
 		return (NULL);
 	while (i < size)
 	{
@@ -77,7 +79,7 @@ char	**ft_split(char *str, char *charset)
 	i = 0;
 	if (*str == '\0' && *charset == '\0')
 		return (NULL);
-	res = (char **)malloc(sizeof(char *) * count_words(str, charset) + 1);
+	res = (char **)malloc(sizeof(char *) * (count_words(str, charset) + 1));
 	if (res == NULL)
 		return (NULL);
 	while (str[i])
