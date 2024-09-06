@@ -6,7 +6,7 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:25:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/06 12:54:41 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:00:12 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ char	**ft_split(char *str, char *charset)
 
 	k = 0;
 	i = 0;
-	if (*str == '\0' && *charset == '\0')
-		return (NULL);
 	res = (char **)malloc(sizeof(char *) * (count_words(str, charset) + 1));
 	if (res == NULL)
 		return (NULL);
