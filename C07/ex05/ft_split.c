@@ -6,7 +6,7 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:25:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/06 10:46:58 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:52:42 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ char	**ft_split(char *str, char *charset)
 		end = i;
 		res[k++] = make_string(str, start, end);
 	}
-	res[k] = make_string(str, i, i + 1);
+	res[k - 1] = make_string(str, i, i + 1);
 	return (res);
 }
