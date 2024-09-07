@@ -6,7 +6,7 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:03:41 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/04 18:01:11 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/07 09:13:02 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,14 @@ int	is_valid_base(char *str)
 void	ft_printnbr(int nbr, char *base)
 {
 	int	blen;
-	int	n;
 
 	blen = ft_strlen(base);
 	if (nbr < 0)
 	{
-		n = nbr + blen;
-		n *= -1;
 		ft_putchar('-');
-		nbr = (nbr / blen) * -1;
-		if (nbr != 0)
-			ft_printnbr(nbr, base);
-		ft_printnbr(n % blen, base);
+		if ((nbr / blen) * -1 > 0)
+			ft_printnbr((nbr / blen) * -1, base);
+		ft_printnbr(-(nbr % blen), base);
 		return ;
 	}
 	if (nbr >= blen)
