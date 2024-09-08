@@ -1,29 +1,27 @@
-/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 20:29:03 by hboutale          #+#    #+#             */
-/*   Updated: 2024/08/28 20:33:17 by hboutale         ###   ########.fr       */
+/*   Created: 2024/09/07 22:18:01 by hboutale          #+#    #+#             */
+/*   Updated: 2024/09/07 22:18:28 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i;
+#include "ft.h"
 
-	i = 0;
-	while (i < n && src[i] != '\0')
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_print(char *s)
+{
+	while (*s)
 	{
-		dest[i] = src[i];
-		i++;
+		ft_putchar(*s);
+		s++;
 	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
 }
