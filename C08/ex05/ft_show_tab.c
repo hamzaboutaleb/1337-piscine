@@ -6,12 +6,12 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:47:26 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/09 09:55:16 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:23:52 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <ft_stock_str.h>
+#include "ft_stock_str.h"
 
 void	ft_println(char *s)
 {
