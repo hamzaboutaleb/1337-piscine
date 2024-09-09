@@ -6,7 +6,7 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:27:14 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/09 11:27:52 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:30:00 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@ typedef struct s_stock_str
 {
 	int size;
 	char *str;
-	char *copy
+	char *copy;
 }	t_stock_str;
