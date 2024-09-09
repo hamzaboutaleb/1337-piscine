@@ -6,7 +6,7 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:47:26 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/09 11:37:27 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:42:33 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_show_tab(struct s_stock_str *par)
 {
 	int	i;
 
-	while (par[i])
+	while (par[i].str)
 	{
 		ft_println(par[i].str);
 		ft_putnbr(par[i].size);
