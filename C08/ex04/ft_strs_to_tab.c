@@ -6,12 +6,11 @@
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:17:17 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/09 09:46:09 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:35:15 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "ft_stock_str.h"
 
 int	ft_strlen(char *s)
 {
