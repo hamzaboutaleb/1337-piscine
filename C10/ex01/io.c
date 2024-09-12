@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:56:56 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/10 15:03:59 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/11 10:48:57 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ void	ft_print_content(int fp)
 	char	buffer[100];
 	int		bytes;
 
-	while ((bytes = read(fp, buffer, 99)) != 0)
+	bytes = read(fp, buffer, 99);
+	while (bytes != 0)
 	{
 		buffer[bytes] = '\0';
 		ft_print(buffer, 0);
+		bytes = read(fp, buffer, 99);
 	}
 }
 
@@ -62,12 +64,14 @@ void	read_files(char **files, int size)
 
 void	interactive_mode(void)
 {
-	char buffer[BUFFER_SIZE];
-	int bytes;
+	char	buffer[BUFFER_SIZE];
+	int		bytes;
 
-	while ((bytes = read(0, &buffer, BUFFER_SIZE - 1)) != 0)
+	bytes = read(0, &buffer, BUFFER_SIZE - 1);
+	while (bytes != 0)
 	{
 		buffer[bytes] = '\0';
 		ft_print((char *)buffer, 0);
+		bytes = read(0, &buffer, BUFFER_SIZE - 1);
 	}
 }

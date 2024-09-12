@@ -1,6 +1,6 @@
-SRCS		= main.c
+SRCS		= main.c io.c
 OBJS		= $(SRCS:.c=.o)
-NAME		= ft_display_file
+NAME		= ft_cat
 CC			= cc
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror

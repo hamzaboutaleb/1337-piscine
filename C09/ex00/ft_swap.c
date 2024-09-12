@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft.h                                               :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hboutale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 14:50:04 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/10 14:50:06 by hboutale         ###   ########.fr       */
+/*   Created: 2024/08/28 17:48:09 by hboutale          #+#    #+#             */
+/*   Updated: 2024/08/28 17:51:12 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <libgen.h>
-#include <stdlib.h>
 #include <unistd.h>
-#define BUFFER_SIZE 1024 * 30
 
-void	ft_print(char *s, int end);
-void	ft_perror(char *program_name, char *filename);
-void	ft_print_content(int fp);
-void	interactive_mode(void);
-void	read_files(char **files, int size);
+void	ft_swap(int *a, int *b)
+{
+	int	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
