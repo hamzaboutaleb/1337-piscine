@@ -6,46 +6,11 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:03:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/11 20:33:28 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/12 22:02:06 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-
-int	ft_atoi(char *str)
-{
-	int	i;
-	int	number;
-
-	i = 0;
-	number = 0;
-	while ((str[i] == ' ') || (str[i] >= '\t' && str[i] <= '\r'))
-		i++;
-	if ((str[i] == '-') || (str[i] == '+'))
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		number *= 10;
-		number += ((int)str[i] - '0');
-		i++;
-	}
-	return (number);
-}
-
-void	print_names(char *name)
-{
-	int	i;
-
-	i = 0;
-	write(1, "==> ", 4);
-	while (name[i])
-	{
-		write(1, &name[i++], 1);
-	}
-	write(1, " <==\n", 5);
-}
+#include "ft.h"
 
 int	size_file(char *filename)
 {
@@ -59,6 +24,17 @@ int	size_file(char *filename)
 		size++;
 	close(fd);
 	return (size);
+}
+
+void	perror(char *name)
+{
+	int	j;
+
+	j = 0;
+	write(2, "ft_tail: ", 9);
+	while (name[j])
+		write(2, &name[j++], 1);
+	write(2, ": No such file or directory\n", 28);
 }
 
 void	show_file_content(int i, int fd, char **argv)
@@ -92,7 +68,6 @@ int	main(int argc, char **argv)
 	int	fd;
 	int	i;
 	int	is_first;
-	int	j;
 
 	i = 3;
 	is_first = 1;
@@ -105,22 +80,14 @@ int	main(int argc, char **argv)
 		{
 			if (is_first == 0)
 				write(1, "\n", 1);
-			else
-				is_first = 0;
+			is_first = 0;
 			print_names(argv[i]);
 		}
 		if (fd >= 0)
 			show_file_content(i, fd, argv);
 		else
-		{
-			j = 0;
-			write(2, "ft_tail: ", 9);
-			while (argv[i][j])
-				write(2, &argv[i][j++], 1);
-			write(2, ": No such file or directory\n", 28);
-		}
+			perror(argv[i]);
 		close(fd);
 		i++;
 	}
-	return (0);
 }

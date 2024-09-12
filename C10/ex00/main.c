@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:31:09 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/11 10:46:46 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/12 21:54:18 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	print_file_content(char *filename)
 		return ;
 	}
 	print_content(fp);
+	close(fp);
 }
 
 int	main(int argc, char **argv)
