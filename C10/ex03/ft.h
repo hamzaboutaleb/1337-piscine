@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:23:28 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/11 19:48:28 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:29:39 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_args
 	char			**files;
 	unsigned int	start;
 	int				argc;
+	int				pad;
 }					t_args;
 
 // hex
@@ -34,3 +35,5 @@ int					ft_strlen(char *s);
 void				ft_perror(char *filename, char *message);
 int					ft_strcmp(char *s1, char *s2);
 void				print_char(char *s, int space);
+unsigned int		ft_strlcpy(char *dest, char *src, unsigned int size);
+int					fill_buffer(int fd, char buffer[17]);

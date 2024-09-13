@@ -6,15 +6,15 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:05:28 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/13 09:07:38 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:29:47 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-void	print_buffer(char *buffer, t_args *args, int pad)
+void	print_buffer(char *buffer, t_args *args)
 {
-	pad_number(args->start, pad);
+	pad_number(args->start, args->pad);
 	if (args->c_flag)
 		ft_putchar(' ');
 	print_hex(buffer, args);
@@ -26,28 +26,29 @@ void	print_buffer(char *buffer, t_args *args, int pad)
 void	ft_dump(int fd, t_args *args)
 {
 	char	buffer[17];
-	int		pad;
-	char	c;
-	int		k;
+	char	prev_buffer[17];
+	int		is_printed;
 
-	if (args->argc)
-		pad = 8;
-	else
-		pad = 7;
+	is_printed = 0;
+	prev_buffer[0] = '\0';
 	while (1)
 	{
-		k = 0;
-		while (k < 16 && read(fd, &c, 1) && c != 0)
-		{
-			buffer[k++] = c;
-		}
-		buffer[k] = '\0';
-		if (k == 0)
+		if (fill_buffer(fd, buffer) == 0)
 			break ;
-		print_buffer(buffer, args, pad);
+		if (ft_strcmp(prev_buffer, buffer) == 0)
+		{
+			args->start += 16;
+			if (is_printed == 0)
+				ft_putstr("*", 1);
+			is_printed = 1;
+		}
+		else
+		{
+			is_printed = 0;
+			print_buffer(buffer, args);
+		}
+		ft_strlcpy(prev_buffer, buffer, 17);
 	}
-	pad_number(args->start, pad);
-	ft_putchar('\n');
 }
 
 void	batch_mode(t_args *args)
@@ -66,7 +67,11 @@ void	batch_mode(t_args *args)
 				ft_perror(args->files[i], ": Bad file descriptor");
 		}
 		else
+		{
 			ft_dump(fd, args);
+			pad_number(args->start, args->pad);
+			ft_putchar('\n');
+		}
 		i++;
 	}
 }
@@ -88,6 +93,10 @@ void	parse_args(t_args *args, int argc, char **argv)
 		}
 		i++;
 	}
+	if (args->c_flag)
+		args->pad = 8;
+	else
+		args->pad = 7;
 }
 
 int	main(int argc, char **argv)
