@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:31:09 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/12 21:54:18 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/12 22:12:33 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	ft_putstr(char *s, int end)
 
 void	print_content(int fp)
 {
-	char	buffer[100];
+	char	buffer[4097];
 	int		bytes;
 
-	bytes = read(fp, buffer, 99);
-	while (bytes != 0)
+	bytes = read(fp, buffer, 4096);
+	while (bytes)
 	{
 		buffer[bytes] = '\0';
 		ft_putstr(buffer, 0);

@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:05:28 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/11 20:23:02 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/13 09:07:38 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	ft_dump(int fd, t_args *args)
 	{
 		k = 0;
 		while (k < 16 && read(fd, &c, 1) && c != 0)
+		{
 			buffer[k++] = c;
+		}
 		buffer[k] = '\0';
 		if (k == 0)
 			break ;
