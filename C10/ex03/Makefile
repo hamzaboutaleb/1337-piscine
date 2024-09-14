@@ -1,4 +1,4 @@
-SRCS	= main.c hex.c str.c str2.c
+SRCS	= main.c hex.c str.c str2.c utils.c
 OBJS	= $(SRCS:.c=.o)
 NAME	= ft_hexdump
 CFLAGS	= -Wall -Wextra -Werror

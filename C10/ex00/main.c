@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:31:09 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 15:03:12 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:13:55 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 #define BUFFER_SIZE 4096
 
-void	ft_putstr(char *s)
+void	ft_putstr(int fd, char *s)
 {
 	while (*s)
-		write(1, s++, 1);
+		write(fd, s++, 1);
 }
 
 void	display_file(char *filename)
@@ -30,7 +30,7 @@ void	display_file(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr("Cannot read file.\n");
+		ft_putstr(2, "Cannot read file.\n");
 		return ;
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -46,12 +46,12 @@ int	main(int argc, char **argv)
 {
 	if (argc < 2)
 	{
-		ft_putstr("File name missing.\n");
+		ft_putstr(2, "File name missing.\n");
 		return (1);
 	}
 	else if (argc > 2)
 	{
-		ft_putstr("Too many arguments.\n");
+		ft_putstr(2, "Too many arguments.\n");
 		return (1);
 	}
 	display_file(argv[1]);

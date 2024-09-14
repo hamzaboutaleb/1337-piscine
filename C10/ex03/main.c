@@ -6,73 +6,74 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:05:28 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/13 10:29:47 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:08:41 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-void	print_buffer(char *buffer, t_args *args)
-{
-	pad_number(args->start, args->pad);
-	if (args->c_flag)
-		ft_putchar(' ');
-	print_hex(buffer, args);
-	if (args->c_flag)
-		print_char(buffer, args->c_flag);
-	ft_putchar('\n');
-}
 
 void	ft_dump(int fd, t_args *args)
 {
 	char	buffer[17];
 	char	prev_buffer[17];
 	int		is_printed;
+	int		i;
 
 	is_printed = 0;
+	i = 0;
 	prev_buffer[0] = '\0';
-	while (1)
+	while (args->i <= args->argc)
 	{
-		if (fill_buffer(fd, buffer) == 0)
-			break ;
-		if (ft_strcmp(prev_buffer, buffer) == 0)
+		while (fill_buffer(fd, buffer, &i) == 0)
 		{
-			args->start += 16;
-			if (is_printed == 0)
-				ft_putstr("*", 1);
-			is_printed = 1;
+			if (buffer_help(&fd, args, buffer, i) == 0)
+				break ;
 		}
-		else
-		{
-			is_printed = 0;
-			print_buffer(buffer, args);
-		}
+		cmp_help(prev_buffer, buffer, args, &is_printed);
 		ft_strlcpy(prev_buffer, buffer, 17);
+		i = 0;
 	}
 }
 
-void	batch_mode(t_args *args)
+void	test_open_file(t_args *args)
 {
 	int	i;
 	int	fd;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (i < args->argc)
 	{
 		fd = open(args->files[i], O_RDONLY);
 		if (fd < 0)
 		{
+			count++;
 			ft_perror(args->files[i], ": No such file or directory");
-			if (i == args->argc)
-				ft_perror(args->files[i], ": Bad file descriptor");
 		}
 		else
-		{
-			ft_dump(fd, args);
-			pad_number(args->start, args->pad);
-			ft_putchar('\n');
-		}
+			close(fd);
 		i++;
+	}
+	if (count == args->argc)
+		ft_perror(args->files[i - 1], ": Bad file descriptor");
+}
+
+void	batch_mode(t_args *args)
+{
+	int	fd;
+
+	test_open_file(args);
+	fd = open_file(args);
+	while (fd < 0 && args->i < args->argc)
+	{
+		fd = open_file(args);
+	}
+	if (fd > 0)
+	{
+		ft_dump(fd, args);
+		pad_number(args->start, args->pad);
+		ft_putchar('\n');
 	}
 }
 
@@ -107,10 +108,13 @@ int	main(int argc, char **argv)
 	args.files = (void *)0;
 	args.start = 0;
 	args.argc = 0;
+	args.i = 0;
 	parse_args(&args, argc, argv);
 	if (!args.files)
 	{
 		ft_dump(0, &args);
+		pad_number(args.start, args.pad);
+		ft_putchar('\n');
 	}
 	else
 	{

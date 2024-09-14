@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 21:56:13 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 14:58:19 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:12:47 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ unsigned int		file_length(char *filename);
 void				print_n_file_content(int fd, unsigned int offset,
 						unsigned int size);
 void				ft_rprint(char *s);
+void				ft_print(char *s);
 
 // utils1
 void				ft_putchar(char c);

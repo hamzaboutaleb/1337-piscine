@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"unistd.h": "c",
-		"ft.h": "c"
+		"ft.h": "c",
+		"fcntl.h": "c"
 	}
 }

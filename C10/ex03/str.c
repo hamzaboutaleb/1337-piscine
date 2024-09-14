@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:23:00 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/11 20:23:59 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:52:40 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	ft_perror(char *filename, char *message)
 	int	j;
 
 	j = 0;
-	ft_putstr("ft_hexdump: ", 0);
-	ft_putstr(filename, 0);
-	ft_putstr(message, 1);
+	ft_rputstr("ft_hexdump: ", 0);
+	ft_rputstr(filename, 0);
+	ft_rputstr(message, 1);
 }
 
 int	ft_strcmp(char *s1, char *s2)

@@ -6,9 +6,11 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:56:55 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 14:58:35 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:13:05 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft.h"
 
 void	ft_putchar(char c)
 {

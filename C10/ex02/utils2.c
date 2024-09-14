@@ -6,9 +6,11 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:58:58 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 14:59:27 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:13:33 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft.h"
 
 int	ft_atoi(char *str)
 {
