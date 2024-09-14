@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 21:56:04 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 11:51:33 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:00:48 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_atoi(char *str)
 
 	i = 0;
 	number = 0;
-	puts("w");
 	while ((str[i] == ' ') || (str[i] >= '\t' && str[i] <= '\r'))
 		i++;
 	if ((str[i] == '-') || (str[i] == '+'))
@@ -78,15 +77,25 @@ unsigned int	file_length(char *filename)
 	return (count);
 }
 
-void	print_n_file_content(int fd, int offset, unsigned int size)
+void	print_n_file_content(int fd, unsigned int offset, unsigned int size)
 {
-	unsigned int size;
 	char *buffer;
-	int fd;
-
-	fd = open(file_length, O_RDONLY);
-	size = file_length(file_length);
+	unsigned int i;
+	char c;
 	buffer = (char *)malloc(sizeof(char) * offset);
-
+	if (offset > size)
+	{
+		read(fd, buffer, offset);
+		write(1, buffer, offset);
+		free(buffer);
+		return ;
+	}
+	i = 0;
+	while (i < (size - offset) && read(fd, &c, 1))
+	{
+		i++;
+	}
+	read(fd, buffer, offset);
+	write(1, buffer, offset);
 	free(buffer);
 }

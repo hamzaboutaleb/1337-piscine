@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:03:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 11:54:36 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 13:49:37 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_header_file(char *filename)
 	ft_print(filename);
 	ft_print(" <==");
 	ft_print("\n");
+	count++;
 }
 
 int	init_args(t_args *args, int ac, char **av)
@@ -78,7 +79,11 @@ int	init_args(t_args *args, int ac, char **av)
 	return (1);
 }
 
-void	interactive_mode(t_args *args)
+void	interactive_mode(void)
+{
+}
+
+void	batch_mode(t_args *args)
 {
 	int		i;
 	int		fd;
@@ -92,13 +97,14 @@ void	interactive_mode(t_args *args)
 		if (fd < 0)
 			perror_nofile(args->pgr_name, args->files[i]);
 		else
+		{
+			if (args->count_files != 1)
+				ft_header_file(filename);
 			print_n_file_content(fd, args->offset, file_length(filename));
+			
+		}
 		i++;
 	}
-}
-
-void	batch_mode(t_args *args)
-{
 }
 
 int	main(int argc, char **argv)
@@ -113,9 +119,8 @@ int	main(int argc, char **argv)
 	{
 		return (0);
 	}
-	printf("number of iles %d\n", args.count_files);
 	if (args.files)
 		batch_mode(&args);
 	else
-		interactive_mode(&args);
+		interactive_mode();
 }
