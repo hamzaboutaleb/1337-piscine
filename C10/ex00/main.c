@@ -6,61 +6,53 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:31:09 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/12 22:12:33 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 09:26:26 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
 
-void	ft_putstr(char *s, int end)
+#define BUFFER_SIZE 4096
+
+void	ft_putstr(char *s)
 {
 	while (*s)
 		write(1, s++, 1);
-	if (end)
-		write(1, "\n", 1);
 }
 
-void	print_content(int fp)
+void	display_file(char *filename)
 {
-	char	buffer[4097];
-	int		bytes;
+	int		fd;
+	char	buffer[BUFFER_SIZE];
+	int		bytes_read;
 
-	bytes = read(fp, buffer, 4096);
-	while (bytes)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 	{
-		buffer[bytes] = '\0';
-		ft_putstr(buffer, 0);
-		bytes = read(fp, buffer, 99);
-	}
-}
-
-void	print_file_content(char *filename)
-{
-	int	fp;
-
-	fp = open(filename, O_RDONLY);
-	if (fp < 0)
-	{
-		ft_putstr("Cannot read file.", 1);
+		ft_putstr("Cannot read file.\n");
 		return ;
 	}
-	print_content(fp);
-	close(fp);
+	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	{
+		write(1, buffer, bytes_read);
+	}
+	close(fd);
 }
 
 int	main(int argc, char **argv)
 {
-	if (argc == 1)
+	if (argc < 2)
 	{
-		ft_putstr("File name missing.", 1);
+		ft_putstr("File name missing.\n");
 		return (1);
 	}
-	if (argc > 2)
+	else if (argc > 2)
 	{
-		ft_putstr("Too many arguments.", 1);
+		ft_putstr("Too many arguments.\n");
 		return (1);
 	}
-	print_file_content(argv[1]);
+
+	display_file(argv[1]);
 	return (0);
 }

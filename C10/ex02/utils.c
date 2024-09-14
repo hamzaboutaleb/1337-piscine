@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fn.c                                               :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 21:56:04 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/12 22:00:07 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:51:33 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_atoi(char *str)
 
 	i = 0;
 	number = 0;
+	puts("w");
 	while ((str[i] == ' ') || (str[i] >= '\t' && str[i] <= '\r'))
 		i++;
 	if ((str[i] == '-') || (str[i] == '+'))
@@ -26,21 +27,66 @@ int	ft_atoi(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		number *= 10;
-		number += ((int)str[i] - '0');
+		number += (str[i] - '0');
 		i++;
 	}
 	return (number);
 }
 
-void	print_names(char *name)
+void	ft_print(char *s)
+{
+	while (*s)
+		write(1, s++, 1);
+}
+
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	write(1, "==> ", 4);
-	while (name[i])
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+int	is_number(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
 	{
-		write(1, &name[i++], 1);
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		i++;
 	}
-	write(1, " <==\n", 5);
+	return (1);
+}
+
+unsigned int	file_length(char *filename)
+{
+	unsigned int	count;
+	char			buffer[1024];
+	int				bytes;
+	int				fd;
+
+	count = 0;
+	fd = open(filename, O_RDONLY);
+	while ((bytes = read(fd, buffer, 1024)) > 0)
+		count += bytes;
+	close(fd);
+	return (count);
+}
+
+void	print_n_file_content(int fd, int offset, unsigned int size)
+{
+	unsigned int size;
+	char *buffer;
+	int fd;
+
+	fd = open(file_length, O_RDONLY);
+	size = file_length(file_length);
+	buffer = (char *)malloc(sizeof(char) * offset);
+
+	free(buffer);
 }

@@ -1,4 +1,4 @@
-SRCS	= main.c fn.c
+SRCS	= main.c utils.c
 OBJS	= $(SRCS:.c=.o)
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror

@@ -6,88 +6,116 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:03:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/12 22:02:06 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:54:36 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-int	size_file(char *filename)
+// ft_tail -c a
+// ft_tail -c 55
+
+void	perror_offset(char *pgr, char *offset)
 {
+	ft_print(pgr);
+	ft_print(": illegal offset --");
+	ft_print(offset);
+	ft_print("\n");
+}
+
+void	perror_nofile(char *pgr, char *file)
+{
+	ft_print(pgr);
+	ft_print(": ");
+	ft_print(file);
+	ft_print(": No such file or directory\n");
+}
+
+void	ft_header_file(char *filename)
+{
+	static unsigned int	count = 0;
+
+	if (count != 0)
+		ft_print("\n");
+	ft_print("==> ");
+	ft_print(filename);
+	ft_print(" <==");
+	ft_print("\n");
+}
+
+int	init_args(t_args *args, int ac, char **av)
+{
+	int		i;
+	char	*s;
+
+	i = 1;
+	args->pgr_name = basename(av[0]);
+	while (i < ac)
+	{
+		s = av[i];
+		if (i == 1 && ft_strcmp(s, "-c") == 0)
+		{
+			args->c_flag = 1;
+		}
+		else if (i == 2)
+		{
+			if (is_number(s))
+				args->offset = ft_atoi(s);
+			else
+			{
+				perror_offset(args->pgr_name, s);
+				return (0);
+			}
+		}
+		else
+		{
+			args->files = av + i;
+			args->count_files = ac - i;
+			return (1);
+		}
+		i++;
+	}
+	return (1);
+}
+
+void	interactive_mode(t_args *args)
+{
+	int		i;
 	int		fd;
-	char	buffer;
-	int		size;
+	char	*filename;
 
-	size = 0;
-	fd = open(filename, O_RDONLY);
-	while (read(fd, &buffer, 1))
-		size++;
-	close(fd);
-	return (size);
+	i = 0;
+	while (i < args->count_files)
+	{
+		filename = args->files[i];
+		fd = open(filename, O_RDONLY);
+		if (fd < 0)
+			perror_nofile(args->pgr_name, args->files[i]);
+		else
+			print_n_file_content(fd, args->offset, file_length(filename));
+		i++;
+	}
 }
 
-void	perror(char *name)
+void	batch_mode(t_args *args)
 {
-	int	j;
-
-	j = 0;
-	write(2, "ft_tail: ", 9);
-	while (name[j])
-		write(2, &name[j++], 1);
-	write(2, ": No such file or directory\n", 28);
-}
-
-void	show_file_content(int i, int fd, char **argv)
-{
-	char	buffer;
-	int		offset;
-	int		readed;
-	int		size;
-
-	size = size_file(argv[i]);
-	readed = 0;
-	offset = ft_atoi(argv[2]);
-	if (argv[2][0] == '+')
-	{
-		while (readed != offset - 1)
-			readed += read(fd, &buffer, 1);
-		while (read(fd, &buffer, 1))
-			write(1, &buffer, 1);
-	}
-	else
-	{
-		while (readed < (size - offset))
-			readed += read(fd, &buffer, 1);
-		while (read(fd, &buffer, 1))
-			write(1, &buffer, 1);
-	}
 }
 
 int	main(int argc, char **argv)
 {
-	int	fd;
-	int	i;
-	int	is_first;
+	t_args	args;
 
-	i = 3;
-	is_first = 1;
-	if (argc < 4)
-		return (1);
-	while (i < argc)
+	args.c_flag = 0;
+	args.offset = -1;
+	args.files = NULL;
+	args.count_files = 0;
+	if (!init_args(&args, argc, argv))
 	{
-		fd = open(argv[i], O_RDONLY);
-		if (argc > 4 && fd >= 0)
-		{
-			if (is_first == 0)
-				write(1, "\n", 1);
-			is_first = 0;
-			print_names(argv[i]);
-		}
-		if (fd >= 0)
-			show_file_content(i, fd, argv);
-		else
-			perror(argv[i]);
-		close(fd);
-		i++;
+		return (0);
 	}
+	printf("number of iles %d\n", args.count_files);
+	if (args.files)
+		batch_mode(&args);
+	else
+		interactive_mode(&args);
 }
