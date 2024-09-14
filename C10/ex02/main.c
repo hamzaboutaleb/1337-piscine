@@ -6,43 +6,11 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:03:16 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 13:49:37 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:58:42 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-// ft_tail -c a
-// ft_tail -c 55
-
-void	perror_offset(char *pgr, char *offset)
-{
-	ft_print(pgr);
-	ft_print(": illegal offset --");
-	ft_print(offset);
-	ft_print("\n");
-}
-
-void	perror_nofile(char *pgr, char *file)
-{
-	ft_print(pgr);
-	ft_print(": ");
-	ft_print(file);
-	ft_print(": No such file or directory\n");
-}
-
-void	ft_header_file(char *filename)
-{
-	static unsigned int	count = 0;
-
-	if (count != 0)
-		ft_print("\n");
-	ft_print("==> ");
-	ft_print(filename);
-	ft_print(" <==");
-	ft_print("\n");
-	count++;
-}
 
 int	init_args(t_args *args, int ac, char **av)
 {
@@ -50,23 +18,17 @@ int	init_args(t_args *args, int ac, char **av)
 	char	*s;
 
 	i = 1;
-	args->pgr_name = basename(av[0]);
 	while (i < ac)
 	{
 		s = av[i];
 		if (i == 1 && ft_strcmp(s, "-c") == 0)
-		{
 			args->c_flag = 1;
-		}
 		else if (i == 2)
 		{
 			if (is_number(s))
 				args->offset = ft_atoi(s);
 			else
-			{
-				perror_offset(args->pgr_name, s);
 				return (0);
-			}
 		}
 		else
 		{
@@ -79,8 +41,42 @@ int	init_args(t_args *args, int ac, char **av)
 	return (1);
 }
 
-void	interactive_mode(void)
+void	ft_write(unsigned int count, unsigned int offset, char *buffer)
 {
+	unsigned int	start;
+	unsigned int	nchar;
+	unsigned int	i;
+
+	start = 0;
+	nchar = count;
+	if (count >= offset)
+	{
+		start = count % offset;
+		nchar = offset;
+	}
+	i = 0;
+	while (i < nchar)
+	{
+		ft_putchar(buffer[(start + i) % offset]);
+		i++;
+	}
+}
+
+void	interactive_mode(unsigned int offset)
+{
+	char			*buffer;
+	char			c;
+	unsigned int	count;
+
+	buffer = (char *)malloc(sizeof(char) * (offset));
+	count = 0;
+	while (read(0, &c, 1) && c != '\0')
+	{
+		buffer[count % offset] = c;
+		count++;
+	}
+	ft_write(count, offset, buffer);
+	free(buffer);
 }
 
 void	batch_mode(t_args *args)
@@ -101,7 +97,7 @@ void	batch_mode(t_args *args)
 			if (args->count_files != 1)
 				ft_header_file(filename);
 			print_n_file_content(fd, args->offset, file_length(filename));
-			
+			close(fd);
 		}
 		i++;
 	}
@@ -115,12 +111,14 @@ int	main(int argc, char **argv)
 	args.offset = -1;
 	args.files = NULL;
 	args.count_files = 0;
+	args.pgr_name = basename(argv[0]);
 	if (!init_args(&args, argc, argv))
 	{
+		perror_offset(args.pgr_name, argv[2]);
 		return (0);
 	}
 	if (args.files)
 		batch_mode(&args);
 	else
-		interactive_mode();
+		interactive_mode(args.offset);
 }

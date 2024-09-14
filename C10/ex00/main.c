@@ -6,7 +6,7 @@
 /*   By: hboutale <hboutale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:31:09 by hboutale          #+#    #+#             */
-/*   Updated: 2024/09/14 09:26:26 by hboutale         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:03:12 by hboutale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	display_file(char *filename)
 		ft_putstr("Cannot read file.\n");
 		return ;
 	}
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
 		write(1, buffer, bytes_read);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	close(fd);
 }
@@ -52,7 +54,6 @@ int	main(int argc, char **argv)
 		ft_putstr("Too many arguments.\n");
 		return (1);
 	}
-
 	display_file(argv[1]);
 	return (0);
 }
